@@ -6,15 +6,18 @@ fn main() {
     let vector = Vector {origin: p1, head: p2};
 
     let temp_magnitude1:f32 = vector.length();
-    let temp_magnitude2:f32 = vector.sqrd_length();
+    let temp_magnitude2:f32 = vector.squared_length();
 
     let normal_vector:Vector = vector.normalise();
+    let fast_normal_vector:Vector = vector.fast_normalise();
 
     let normal_vector_length:f32 = normal_vector.length();
+    let fast_normal_length:f32 = fast_normal_vector.length();
 
     println!("{}", temp_magnitude1);
     println!("{}", temp_magnitude2);
-    println!("{}", normal_vector_length)
+    println!("{}", normal_vector_length);
+    println!("{}", fast_normal_length)
 
 }
 
@@ -51,15 +54,42 @@ impl Vector {
 
         let inverse_length : f32 = 1.0 / (&self).length();
 
-        let temp_head = Point {
-            x: ((x2 - x1) * inverse_length) + x1,
-            y: ((y2 - y1) * inverse_length) + y1,
-            z: ((z2 - z1) * inverse_length) + z1,
-        };
+        Vector {
+            origin:
+            Point {x: x1, y: y1, z: z1},
+            head:
+            Point {
+                x: ((x2 - x1) * inverse_length) + x1,
+                y: ((y2 - y1) * inverse_length) + y1,
+                z: ((z2 - z1) * inverse_length) + z1,
+            }}
+    }
 
-        let temp_origin = Point {x: x1, y: y1, z: z1};
+    fn fast_normalise (&self) -> Vector{
+        let Point { x: x1, y: y1, z: z1} = self.origin;
+        let Point { x: x2, y: y2, z: z2} = self.head;
 
-        Vector {origin: temp_origin, head: temp_head}
+        let temp_length_squared:f32 = self.squared_length();
+
+        let inverse_length : f32 = Vector::fast_inv_sqrt(temp_length_squared);
+
+        Vector {
+            origin:
+                Point {x: x1, y: y1, z: z1},
+            head:
+                Point {
+                x: ((x2 - x1) * inverse_length) + x1,
+                y: ((y2 - y1) * inverse_length) + y1,
+                z: ((z2 - z1) * inverse_length) + z1,
+        }}
+    }
+
+    fn fast_inv_sqrt(x: f32) -> f32 {
+        let i = x.to_bits();
+        let i = 0x5f3759df - (i >> 1);
+        let y = f32::from_bits(i);
+
+        y * (1.5 - 0.5 * x * y * y)
     }
 }
 
