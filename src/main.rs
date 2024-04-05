@@ -5,20 +5,13 @@ fn main() {
 
     let vector = Vector {origin: p1, head: p2};
 
-    let temp_magnitude1:f32 = vector.length();
-    let temp_magnitude2:f32 = vector.squared_length();
-
     let normal_vector:Vector = vector.normalise();
     let fast_normal_vector:Vector = vector.fast_normalise();
 
     let normal_vector_length:f32 = normal_vector.length();
     let fast_normal_length:f32 = fast_normal_vector.length();
 
-    println!("{}", temp_magnitude1);
-    println!("{}", temp_magnitude2);
-    println!("{}", normal_vector_length);
-    println!("{}", fast_normal_length)
-
+    println!("Normal maths vector normalisation\n{}\nFast inverse square root normalisation\n{}", normal_vector_length, fast_normal_length );
 }
 
 struct DisplacementVector { x: f32, y: f32, z: f32 }
