@@ -34,7 +34,7 @@ impl Vector {
         f32::powf((x * x) + (y * y) + (z * z), 0.5)
     }
 
-    fn sqrd_length (&self) -> f32{
+    fn squared_length (&self) -> f32{
         let Point { x: x1, y: y1, z: z1} = self.origin;
         let Point { x: x2, y: y2, z: z2} = self.head;
 
@@ -52,9 +52,9 @@ impl Vector {
         let inverse_length : f32 = 1.0 / (&self).length();
 
         let temp_head = Point {
-            x: (((x2 - x1) * inverse_length) + x1),
-            y: (((y2 - y1) * inverse_length) + y1),
-            z: (((z2 - z1) * inverse_length) + z1),
+            x: ((x2 - x1) * inverse_length) + x1,
+            y: ((y2 - y1) * inverse_length) + y1,
+            z: ((z2 - z1) * inverse_length) + z1,
         };
 
         let temp_origin = Point {x: x1, y: y1, z: z1};
