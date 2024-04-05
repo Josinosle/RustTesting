@@ -16,7 +16,7 @@ fn main() {
         z: 15f64
     };
 
-    let vector = Vector {origin: p1, head: p2};
+    let vector = Vector::new (p1, p2);
 
     let normal_vector:Vector = vector.normalise();
     let fast_normal_vector:Vector = vector.fast_normalise();

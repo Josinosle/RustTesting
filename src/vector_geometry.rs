@@ -1,11 +1,15 @@
 use std::mem::transmute;
 pub(crate) struct DisplacementVector { pub(crate) x: f64, pub(crate) y: f64, pub(crate) z: f64 }
 
-pub(crate) struct Vector { pub(crate) origin: DisplacementVector, pub(crate) head: DisplacementVector }
+pub(crate) struct Vector { origin: DisplacementVector, pub(crate) head: DisplacementVector }
 
 impl Vector {
 
-    pub(crate) fn length (&self) -> f64{
+    pub fn new (origin: DisplacementVector, head: DisplacementVector) -> Self {
+        Self {origin, head }
+    }
+
+    pub fn length (&self) -> f64{
         let DisplacementVector { x: x1, y: y1, z: z1} = self.origin;
         let DisplacementVector { x: x2, y: y2, z: z2} = self.head;
 
@@ -27,13 +31,13 @@ impl Vector {
         (x * x) + (y * y) + (z * z)
     }
 
-    pub(crate) fn normalise (&self) -> Vector{
+    pub fn normalise (&self) -> Vector{
         let inverse_length : f64 = 1.0 / (&self).length();
 
         Self::normalised_vector(&self,inverse_length)
     }
 
-    pub(crate) fn fast_normalise (&self) -> Vector{
+    pub fn fast_normalise (&self) -> Vector{
         let temp_length_squared:f64 = self.squared_length();
 
         let inverse_length : f64 = Vector::fast_inv_sqrt(temp_length_squared);
