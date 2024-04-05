@@ -1,8 +1,4 @@
 fn main() {
-    println!("Hello, world!");
-    let boolean_test: bool = true;
-    println!("Is rust better than C++");
-    println!("{}", boolean_test);
 
     let p1 = Point {x: 10f32, y: 11f32, z: 12f32 };
     let p2 = Point {x: 12f32, y: 24f32, z: 15f32 };
